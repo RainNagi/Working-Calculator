@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/mystyle.css">
+    <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="Calcicon.png">
+    <title>Working Calculator</title>
+</head>
+<body>
+    <table>
+        <th colspan="2" class="name">
+            RainCalc
+        </th>
+        <th colspan="6" class="calculator">
+            Simple Calculator
+        </th>
+        <tr>
+            <td colspan="4">
+                <input type="text" id="dis" class="disp" disabled>
+                <input type="text" id="result" class="res" disabled>
+            </td>
+            <td rowspan="6" colspan="3" class="hist">
+                <div id="history" class="hist2" >
+                    <div class="ory">History</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="appendNumber('(')" value="(" class="others">
+            <td>
+                <input type="button" onclick="appendNumber(')')" value=")" class="others">
+            </td>    
+            <td>
+                <input type="button" onclick="del()" value="Del" class="delete" id="del">
+            </td>    
+            <td>
+                <input type="button" onclick="clearall()" value="AC" class="delete" id="clear">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="appendNumber(7)" value="7" class="numbers">
+            <td>
+                <input type="button" onclick="appendNumber(8)" value="8" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="appendNumber(9)" value="9" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="divide()" value="÷" class="operations">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="appendNumber(4)" value="4" class="numbers">
+            <td>
+                <input type="button" onclick="appendNumber(5)" value="5" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="appendNumber(6)" value="6" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="multiply()" value="×" class="operations">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="appendNumber(1)" value="1" class="numbers">
+            <td>
+                <input type="button" onclick="appendNumber(2)" value="2" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="appendNumber(3)" value="3" class="numbers">
+            </td>    
+            <td>
+                <input type="button" onclick="minus()" value="−" class="operations">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="appendNumber('.')" value="." class="others">
+            </td>
+            <td>
+                <input type="button" onclick="appendNumber(0)" value="0" class="numbers">
+            </td>
+            <td>
+                <input type="button" onclick="calculate()" value="=" class="operations">
+            </td>
+            <td>
+                <input type="button" onclick="add()" value ="+" class="operations" >
+            </td>
+        </tr>
+        <script>
+            let currentInput = "";
+            let display = "";
+            let history = "";
+            let historyContainer = document.getElementById("history");
+            
+
+            function clearall() {
+                currentInput = '';
+                display= '';
+                document.getElementById('dis').value = '';
+                document.getElementById('result').value = '';
+            }
+
+            function del() {
+                currentInput = currentInput.slice(0, -1);
+                display = display.slice(0, -1);
+                document.getElementById('dis').value = display;
+            }
+            
+            function appendNumber(number) {
+                currentInput += number;
+                display += number;
+                document.getElementById('dis').value = display;
+            }
+            
+            function add() {
+                currentInput += "+";
+                display += "+";
+                document.getElementById('dis').value = display;
+            }
+
+            function minus() {
+                currentInput += "-";
+                display += "−";
+                document.getElementById('dis').value = display;
+            }
+
+            function multiply() {
+                currentInput += "*";
+                display += "×";
+                document.getElementById('dis').value = display;
+            }
+
+            function divide() {
+                currentInput += "/";
+                display += "÷";
+                document.getElementById('dis').value = display;
+            }
+
+            function calculate() {
+                const result = eval(currentInput);
+                let answer = Math.round(result * 10000) / 10000;
+                console.log(answer);
+                document.getElementById('result').value = answer;
+                addToHistory(answer)
+                
+            }
+            function addToHistory(answer){
+                history += display + "=" + answer;
+                newItem = document.createElement("h3");
+                newItem.textContent = history;
+                history = '';
+                historyContainer.appendChild(newItem);
+                
+            }
+        </script>
+    </table>
+</body>
+</html>
